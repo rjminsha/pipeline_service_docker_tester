@@ -1,0 +1,59 @@
+{
+    "id": "ibm.devops.services.pipeline.docker.test",
+    "version": 1,
+    "name_key": "ExtName",
+    "desc_key": "ExtDesc",
+    "extension_type": "Deploy",
+    "inputs": [
+        {
+            "type": "Artifacts",
+            "inclusion" : "always"
+        },
+        {
+            "type": "Bluemix",
+            "inclusion" : "always"
+        }
+    ],
+    "params": [
+        {
+            "name": "COMMAND",
+            "type": "TextArea",
+            "required": "true",
+            "default_value" : "#!/bin/bash
+#!/bin/bash
+
+#########################
+# Environment DETAILS   #
+#########################
+# The environment has been setup.  
+# The Cloud Foundry CLI (cf), IBM Container Service CLI (ice), Git client (git), IDS Inventory CLI (ids-inv) and Python 2.7.3 (python) have been installed.
+# Based on the organization and space selected in the Job credentials are in place for both IBM Container Service and IBM Bluemix 
+# The following environment variables will be set: 
+# IMAGE_NAME: The name of the image used as input 
+# IP_LIMIT: The max allowed public IP addresses for this space 
+# CONTAINER_NAME: The name parameter exposed on this job
+# DEPLOY_TYPE: Input into the deployment strategy desired.  For example: simple, red_black
+# PORT: Ports to expose on the container or the group
+# The following colors have been defined to help with presentation of logs: green, red, label_color, no_color.  
+echo -3 \"${label_color}Starting execution${no_color}\"
+# you code here  
+echo -e \"${green}Execution complete${no_label}\"",
+            "label_key": "COMMAND_KEY",
+            "desc_key": "COMMAND_DESC"
+        }
+    ],
+    "outputs": [
+    ],
+    "execution": {
+        "type": "JenkinsDocker",
+        "shell": "#!/bin/bash
+set +x 
+set +e 
+. $EXT_DIR/_init.sh
+/bin/bash -e #COMMAND#"
+    }
+    },
+    "project": "https://github.com/rjminsha/pipeline_service_docker_tester",
+    "project_example": "https://hub.jazz.net/pipeline/rjminsha/ice-pipeline_demo",
+    "project_contact": "rjminsha@us.ibm.com"
+}
